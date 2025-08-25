@@ -4,19 +4,68 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>Abu Sultan</title>
+
+  <!-- خط كوفي جميل -->
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    html, body { height: 100%; margin: 0; background: #f6f7fb; }
-    .app-frame { position: fixed; inset: 0; width: 100vw; height: 100vh; border: 0; }
-    .loading {
-      position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      color: #333;
+    :root{
+      --bg: #f6f7fb;
+      --text: #111;
+      --accent: #0a84ff;
     }
+    html, body { height: 100%; margin: 0; background: var(--bg); }
+    /* الإطار يعرض تطبيق Google Apps Script مباشرة */
+    .app-frame {
+      position: fixed; inset: 0;
+      width: 100vw; height: 100vh;
+      border: 0; z-index: 2;
+      background: transparent;
+    }
+
+    /* شاشة البداية */
+    .loading {
+      position: fixed; inset: 0; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg);
+    }
+    .brand {
+      font-family: 'Reem Kufi', system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+      font-size: clamp(26px, 6vw, 42px);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; gap: 10px;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .brand::after{
+      content: '';
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(10,132,255,0.35);
+      animation: dot 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.95; }
+      50%      { transform: scale(1.03); opacity: 1; }
+    }
+    @keyframes dot {
+      0%   { box-shadow: 0 0 0 0 rgba(10,132,255,0.35); }
+      70%  { box-shadow: 0 0 0 14px rgba(10,132,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(10,132,255,0); }
+    }
+
+    /* إخفاء عنصر */
     .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="loading" id="loading">…  الوكيل ابو سلطان   …</div>
+  <!-- شاشة البداية (تختفي بعد تحميل الإطار) -->
+  <div class="loading" id="loading">
+    <div class="brand">الوكيل أبو سلطان</div>
+  </div>
+
+  <!-- الإطار الذي يعرض تطبيقك مباشرة -->
   <iframe
     id="app"
     class="app-frame"
@@ -24,13 +73,22 @@
     allow="clipboard-write"
     referrerpolicy="no-referrer-when-downgrade">
   </iframe>
+
   <script>
     const frame = document.getElementById('app');
     const loading = document.getElementById('loading');
 
-    // أخفِ شاشة التحميل عند تحميل الإطار
-    frame.addEventListener('load', () => { loading.classList.add('hidden'); });
+    // أخفِ شاشة البداية بمجرد تحميل الإطار
+    frame.addEventListener('load', () => {
+      loading.classList.add('hidden');
+    });
+
+    // احتياط: لو تأخر التحميل كثير، خفّف الانتباه بعد 8 ثواني
+    setTimeout(() => {
+      loading.style.opacity = '0.0';
+      loading.style.transition = 'opacity .4s ease';
+      setTimeout(()=> loading.classList.add('hidden'), 400);
+    }, 8000);
   </script>
 </body>
-
 </html>
