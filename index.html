@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Abu Sultan</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #f6f7fb; }
+    .app-frame { position: fixed; inset: 0; width: 100vw; height: 100vh; border: 0; }
+    .loading {
+      position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #333;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">… جارٍ فتح التطبيق …</div>
+  <iframe
+    id="app"
+    class="app-frame"
+    src="https://script.google.com/macros/s/AKfycbwKiJRjHPWTeB7YeQWTecxMvY2PNkRgEL0szOZXIBJTb41-lc2yMckmm0ceq1BCkUcPtg/exec"
+    allow="clipboard-write"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+  <script>
+    const frame = document.getElementById('app');
+    const loading = document.getElementById('loading');
+
+    // أخفِ شاشة التحميل عند تحميل الإطار
+    frame.addEventListener('load', () => { loading.classList.add('hidden'); });
+  </script>
+</body>
+</html>
