@@ -2,12 +2,10 @@ module.exports = async (req, res) => {
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwKiJRjHPWTeB7YeQWTecxMvY2PNkRgEL0szOZXIBJTb41-lc2yMckmm0ceq1BCkUcPtg/exec";
 
   try {
-    // URL أصلي من Vercel (مع الاستعلام إن وُجد)
     const incomingUrl = req.url ? req.url : "/";
     const queryPart = incomingUrl.includes("?") ? incomingUrl.substring(incomingUrl.indexOf("?")) : "";
     const targetUrl = GAS_URL + queryPart;
 
-    // رؤوس الطلب
     const headers = { ...req.headers };
     delete headers.host;
 
@@ -19,10 +17,9 @@ module.exports = async (req, res) => {
       init.body = Buffer.concat(chunks);
     }
 
-    // نفّذ الطلب إلى GAS
     const upstream = await fetch(targetUrl, init);
 
-    // انسخ الرؤوس مع إزالة المسببة للمشاكل
+    // انسخ الرؤوس
     const outHeaders = {};
     upstream.headers.forEach((v, k) => {
       const key = String(k).toLowerCase();
@@ -33,6 +30,9 @@ module.exports = async (req, res) => {
       ) return;
       outHeaders[k] = v;
     });
+
+    // ✅ إجبار نوع المحتوى HTML
+    outHeaders["Content-Type"] = "text/html; charset=utf-8";
 
     outHeaders["Cache-Control"] = "no-store";
     outHeaders["Access-Control-Allow-Origin"] = "*";
