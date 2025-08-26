@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>الوكيل أبو سلطان</title>
+
+  <!-- خط كوفي -->
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600;700&display=swap" rel="stylesheet" />
+
   <style>
-    html,body{
-      margin:0;height:100%;
-      display:grid;place-items:center;
-      background:#f6f7fb;
-      font-family: 'Reem Kufi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-    .box{
-      padding:22px 28px;
-      background:#fff;
-      border-radius:14px;
-      box-shadow:0 10px 30px rgba(0,0,0,.08);
-      font-size:24px;
+    html,body{height:100%;margin:0;display:grid;place-items:center;background:#f6f7fb}
+    .brand{
+      font-family:'Reem Kufi',sans-serif;
+      font-size:clamp(28px,7vw,46px);
       font-weight:700;
       color:#0a84ff;
-      animation:pulse 1.8s ease-in-out infinite;
+      animation:pulse .9s ease-in-out infinite;
     }
-    @keyframes pulse{
-      0%,100%{transform:scale(1);opacity:0.95}
-      50%{transform:scale(1.07);opacity:1}
-    }
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.05);opacity:1}}
   </style>
 </head>
 <body>
-  <div class="box">الوكيل أبو سلطان</div>
+  <div class="brand">الوكيل أبو سلطان</div>
+
+  <script>
+    // تحويل سريع جدًا مباشرة إلى التطبيق
+    window.location.replace('/app');
+  </script>
 </body>
 </html>
