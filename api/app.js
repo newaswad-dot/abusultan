@@ -19,7 +19,6 @@ module.exports = async (req, res) => {
 
     const upstream = await fetch(targetUrl, init);
 
-    // انسخ الرؤوس
     const outHeaders = {};
     upstream.headers.forEach((v, k) => {
       const key = String(k).toLowerCase();
@@ -31,9 +30,8 @@ module.exports = async (req, res) => {
       outHeaders[k] = v;
     });
 
-    // ✅ إجبار نوع المحتوى HTML
+    // ✅ تأكد أنه HTML
     outHeaders["Content-Type"] = "text/html; charset=utf-8";
-
     outHeaders["Cache-Control"] = "no-store";
     outHeaders["Access-Control-Allow-Origin"] = "*";
 
